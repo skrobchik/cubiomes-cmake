@@ -14,6 +14,17 @@ add_library(libcubiomes
     rng.h
     util.c util.h
 )
+target_include_directories(libcubiomes PUBLIC
+    biomenoise.h
+    biomes.h
+    finders.h
+    generator.h
+    layers.h
+    noise.h
+    quadbase.h
+    rng.h
+    util.h
+)
 
 add_executable(cubiomes_tests tests.c)
 target_link_libraries(cubiomes_tests libcubiomes)
