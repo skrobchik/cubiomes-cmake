@@ -1,7 +1,6 @@
 #include "finders.h"
 #include "util.h"
 
-#include <sys/time.h>
 #include <time.h>
 #include <float.h>
 #include <stdlib.h>
@@ -23,7 +22,7 @@ static uint32_t hash32(uint32_t x)
 static double now()
 {
     struct timespec t;
-    clock_gettime(CLOCK_MONOTONIC, &t);
+    timespec_get(&t, TIME_UTC);
     return t.tv_sec + t.tv_nsec * 1e-9;
 }
 
@@ -118,8 +117,8 @@ int testBiomeGen1x1(const int *mc, const uint32_t *expect, int dim, int bits, in
         double t = -now();
         h = getRef(mc[test], dim, bits, 4, spread, NULL);
         t += now();
-        printf("got %08x %s\e[0m (%ld msec)\n",
-            h, h == expect[test] ? "\e[1;92mOK" : "\e[1;91mFAILED",
+        printf("got %08x %s\x1B[0m (%ld msec)\n",
+            h, h == expect[test] ? "\x1B[1;92mOK" : "\x1B[1;91mFAILED",
             (long)(t*1e3));
         ok &= (h == expect[test]);
     }
